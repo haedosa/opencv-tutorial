@@ -12,7 +12,6 @@
     devShells.${system} = {
       default = pkgs.mkShell {
         buildInputs = [
-          pkgs.pkg-config
           pkgs.opencv4
           pkgs.cmake
           pkgs.clang-tools_12

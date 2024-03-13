@@ -1,4 +1,4 @@
-{ stdenv, opencv4, pkg-config, cmake, ... }:
+{ stdenv, opencv4, cmake, ... }:
 
 stdenv.mkDerivation {
   name = "opencv-tutorial";
@@ -10,7 +10,6 @@ stdenv.mkDerivation {
   in
     [
       opencvGtk
-      pkg-config
       cmake
     ];
 }
