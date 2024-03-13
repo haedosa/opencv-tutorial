@@ -298,7 +298,7 @@ int main(int argc, char *argv[])
 
     */
 
-    setNumThreads(1);
+    // setNumThreads(1);
 
     double t = (double)getTickCount();
 

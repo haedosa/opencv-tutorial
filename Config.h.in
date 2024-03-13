@@ -1,0 +1,14 @@
+// Config.h.in - Use CMake to fill in the blanks
+#ifndef CONFIG_H
+#define CONFIG_H
+
+// Compiler information
+#define COMPILER_INFO "@CMAKE_CXX_COMPILER@"
+
+// Compiler flags
+#define COMPILER_FLAGS "@CMAKE_CXX_FLAGS@"
+
+// Other configurations can go here
+#define PROJECT_VERSION "@OpenCVTutorial_VERSION@"
+
+#endif // CONFIG_H

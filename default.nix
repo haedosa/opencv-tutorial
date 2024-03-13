@@ -1,4 +1,4 @@
-{ stdenv, opencv4, cmake, ... }:
+{ stdenv, opencv-custom, cmake, ... }:
 
 stdenv.mkDerivation {
   name = "opencv-tutorial";
@@ -6,10 +6,13 @@ stdenv.mkDerivation {
   src = ./.;
 
   buildInputs = let
-    opencvGtk = opencv4.override (old: { enableGtk2 = true; });
+    opencvGtk = opencv-custom.override (old: { enableGtk2 = true; });
   in
     [
       opencvGtk
       cmake
     ];
+
+  cmakeFlags = [
+  ];
 }

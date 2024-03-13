@@ -21,12 +21,17 @@
 
     packages.${system} = {
       default = pkgs.opencv-tutorial;
+      opencv-custom = pkgs.opencv-custom;
     };
 
     overlay = final: prev:
     {
       opencv-tutorial = final.callPackage ./. {};
+      opencv-custom = prev.opencv4.overrideAttrs (oldAttrs: {
+        cmakeFlags = oldAttrs.cmakeFlags ++ [
+          "-DWITH_OPENMP=OFF"
+        ];
+      });
     };
-
   };
 }
