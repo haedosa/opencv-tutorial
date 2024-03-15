@@ -7,12 +7,13 @@
   outputs = { self, nixpkgs, ... }@inputs:
   let
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; overlays = [self.overlay]; };
+    pkgs = import nixpkgs { inherit system; overlays = [self.overlay]; config = { allowUnfree = true; }; };
   in rec {
     devShells.${system} = {
       default = pkgs.mkShell {
         buildInputs = [
-          pkgs.opencv4
+          pkgs.opencv-custom
+          pkgs.cudatoolkit
           pkgs.cmake
           pkgs.clang-tools_12
         ];

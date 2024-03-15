@@ -1,4 +1,4 @@
-{ stdenv, opencv-custom, cmake, ... }:
+{ stdenv, opencv-custom, cmake, cudatoolkit, ... }:
 
 stdenv.mkDerivation {
   name = "opencv-tutorial";
@@ -6,10 +6,14 @@ stdenv.mkDerivation {
   src = ./.;
 
   buildInputs = let
-    opencvGtk = opencv-custom.override (old: { enableGtk2 = true; });
+    my-opencv = opencv-custom.override
+      (old: { enableGtk2 = true;
+              enableCuda = true;
+            });
   in
     [
-      opencvGtk
+      my-opencv
+      cudatoolkit
       cmake
     ];
 
