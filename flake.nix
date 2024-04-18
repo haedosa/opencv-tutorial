@@ -12,27 +12,44 @@
     devShells.${system} = {
       default = pkgs.mkShell {
         buildInputs = [
-          pkgs.opencv-custom
+          pkgs.my-opencv
           pkgs.cudatoolkit
           pkgs.cmake
           pkgs.clang-tools_12
+          pkgs.python3
         ];
       };
     };
 
     packages.${system} = {
       default = pkgs.opencv-tutorial;
-      opencv-custom = pkgs.opencv-custom;
+      my-opencv = pkgs.my-opencv;
     };
 
     overlay = final: prev:
     {
       opencv-tutorial = final.callPackage ./. {};
-      opencv-custom = prev.opencv4.overrideAttrs (oldAttrs: {
+      my-opencv = ((final.callPackage ./opencv/opencv4.nix {
+        inherit (final.darwin.apple_sdk.frameworks)
+          AVFoundation Cocoa VideoDecodeAcceleration CoreMedia MediaToolbox Accelerate;
+        pythonPackages = final.python3Packages;
+      }).overrideAttrs (oldAttrs: {
         cmakeFlags = oldAttrs.cmakeFlags ++ [
           "-DWITH_OPENMP=OFF"
+          "-DCPU_BASELINE=AVX"
+          "-DCPU_DISPATCH=AVX2"
         ];
-      });
+      })).override (old:
+        {
+          enableGtk2 = true;
+          enableCuda = true;
+          enableCudnn = false;
+          enableIpp = false;
+          enablePython = false;
+          runAccuracyTests = true;
+          runPerformanceTests = true;
+        }
+      );
     };
   };
 }
